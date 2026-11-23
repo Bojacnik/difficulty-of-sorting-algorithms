@@ -1,0 +1,21 @@
+<Project>
+
+  <!-- Shared settings for every project in the repo. -->
+  <PropertyGroup>
+    <TargetFramework>net11.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <Deterministic>true</Deterministic>
+    <ContinuousIntegrationBuild Condition="'$(CI)' == 'true'">true</ContinuousIntegrationBuild>
+  </PropertyGroup>
+
+  <!-- Code quality: analyzers at the "recommended" level, code style from .editorconfig enforced in the build,
+       every warning an error in Release and on CI. -->
+  <PropertyGroup>
+    <AnalysisLevel>latest-recommended</AnalysisLevel>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <TreatWarningsAsErrors Condition="'$(Configuration)' == 'Release' Or '$(CI)' == 'true'">true</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+</Project>

@@ -1,0 +1,145 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:DifficultyOfSortingAlgorithms.ViewModels"
+        xmlns:views="using:DifficultyOfSortingAlgorithms.Views"
+        x:Class="DifficultyOfSortingAlgorithms.Views.MainWindow"
+        x:DataType="vm:MainViewModel"
+        Title="Difficulty of Sorting Algorithms"
+        Width="1200" Height="760" MinWidth="820" MinHeight="520">
+
+    <Window.Styles>
+        <Style Selector="TextBlock.section">
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Foreground" Value="{DynamicResource SystemControlForegroundBaseMediumBrush}" />
+            <Setter Property="Margin" Value="0,14,0,6" />
+        </Style>
+        <Style Selector="Button.link">
+            <Setter Property="Padding" Value="6,2" />
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="Background" Value="Transparent" />
+        </Style>
+    </Window.Styles>
+
+    <Grid ColumnDefinitions="360,*" Margin="16">
+
+        <!-- Settings -->
+        <!-- The right padding keeps the scrollbar beside the settings instead of over them. -->
+        <ScrollViewer Grid.Column="0" Margin="0,0,12,0" HorizontalScrollBarVisibility="Disabled"
+                      AllowAutoHide="False">
+            <StackPanel Margin="0,0,18,0">
+                <TextBlock Text="Difficulty of Sorting Algorithms" FontSize="18" FontWeight="Bold" TextWrapping="Wrap" />
+                <TextBlock Text="Times how long each algorithm takes to sort increasingly larger arrays."
+                           TextWrapping="Wrap" Opacity="0.7" Margin="0,4,0,0" />
+
+                <TextBlock Classes="section" Text="SIZES" />
+                <Grid ColumnDefinitions="*,140" RowDefinitions="Auto,Auto,Auto,Auto" RowSpacing="8">
+                    <TextBlock Text="Steps (100·i²)" VerticalAlignment="Center" />
+                    <NumericUpDown Grid.Column="1" Value="{Binding Steps}" Minimum="1" Maximum="{Binding MaxSteps}" FormatString="0" />
+                    <TextBlock Grid.Row="1" Text="Input" VerticalAlignment="Center" />
+                    <ComboBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding InputKinds}" SelectedItem="{Binding Input}"
+                              HorizontalAlignment="Stretch" />
+                    <TextBlock Grid.Row="2" Text="Repetitions (median)" VerticalAlignment="Center" />
+                    <NumericUpDown Grid.Row="2" Grid.Column="1" Value="{Binding Repetitions}" Minimum="1" Maximum="100" FormatString="0" />
+                    <TextBlock Grid.Row="3" Text="Time budget (s)" VerticalAlignment="Center"
+                               ToolTip.Tip="An algorithm stops once a single sort takes longer than this." />
+                    <NumericUpDown Grid.Row="3" Grid.Column="1" Value="{Binding TimeBudgetSeconds}" Minimum="0.01" Maximum="3600"
+                                   Increment="0.5" FormatString="0.##" />
+                </Grid>
+                <TextBlock Text="{Binding LargestSizeText}" Opacity="0.6" FontSize="12" Margin="0,6,0,0" />
+
+                <DockPanel Margin="0,14,0,6">
+                    <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                        <Button Classes="link" Content="All" Command="{Binding SelectAllCommand}" CommandParameter="Original" />
+                        <Button Classes="link" Content="None" Command="{Binding SelectNoneCommand}" CommandParameter="Original" />
+                    </StackPanel>
+                    <TextBlock Classes="section" Margin="0" VerticalAlignment="Center" Text="ORIGINAL ALGORITHMS" />
+                </DockPanel>
+                <ItemsControl ItemsSource="{Binding OriginalAlgorithms}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate x:DataType="vm:AlgorithmOption">
+                            <CheckBox IsChecked="{Binding IsSelected}">
+                                <ToolTip.Tip>
+                                    <StackPanel MaxWidth="300" Spacing="4">
+                                        <TextBlock Text="{Binding Name}" FontWeight="SemiBold" />
+                                        <TextBlock Text="{Binding OriginText}" Opacity="0.7" FontSize="12" />
+                                        <TextBlock Text="{Binding Complexity, StringFormat='Complexity: {0}'}" Opacity="0.7" FontSize="12" />
+                                        <TextBlock Text="{Binding Description}" TextWrapping="Wrap" Margin="0,4,0,0" />
+                                    </StackPanel>
+                                </ToolTip.Tip>
+                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                    <Line StartPoint="0,0" EndPoint="24,0" Stroke="{Binding Brush}" StrokeThickness="3"
+                                          StrokeDashArray="{Binding DashArray}" VerticalAlignment="Center" />
+                                    <TextBlock Text="{Binding Name}" />
+                                    <TextBlock Text="{Binding Complexity}" Opacity="0.5" FontSize="12" VerticalAlignment="Center" />
+                                </StackPanel>
+                            </CheckBox>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+                <DockPanel Margin="0,14,0,6">
+                    <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                        <Button Classes="link" Content="All" Command="{Binding SelectAllCommand}" CommandParameter="Bojalib" />
+                        <Button Classes="link" Content="None" Command="{Binding SelectNoneCommand}" CommandParameter="Bojalib" />
+                    </StackPanel>
+                    <TextBlock Classes="section" Margin="0" VerticalAlignment="Center" Text="BOJALIB" />
+                </DockPanel>
+                <ItemsControl ItemsSource="{Binding BojalibAlgorithms}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate x:DataType="vm:AlgorithmOption">
+                            <CheckBox IsChecked="{Binding IsSelected}">
+                                <ToolTip.Tip>
+                                    <StackPanel MaxWidth="300" Spacing="4">
+                                        <TextBlock Text="{Binding Name}" FontWeight="SemiBold" />
+                                        <TextBlock Text="{Binding OriginText}" Opacity="0.7" FontSize="12" />
+                                        <TextBlock Text="{Binding Complexity, StringFormat='Complexity: {0}'}" Opacity="0.7" FontSize="12" />
+                                        <TextBlock Text="{Binding Description}" TextWrapping="Wrap" Margin="0,4,0,0" />
+                                    </StackPanel>
+                                </ToolTip.Tip>
+                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                    <Line StartPoint="0,0" EndPoint="24,0" Stroke="{Binding Brush}" StrokeThickness="3"
+                                          StrokeDashArray="{Binding DashArray}" VerticalAlignment="Center" />
+                                    <TextBlock Text="{Binding Name}" />
+                                    <TextBlock Text="{Binding Complexity}" Opacity="0.5" FontSize="12" VerticalAlignment="Center" />
+                                </StackPanel>
+                            </CheckBox>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+                <StackPanel Orientation="Horizontal" Spacing="8" Margin="0,18,0,0">
+                    <Button Classes="accent" Content="Run" Command="{Binding RunCommand}" MinWidth="90" />
+                    <Button Content="Cancel" Command="{Binding CancelCommand}" />
+                    <Button Content="Export CSV…" Click="OnExportClick" IsEnabled="{Binding HasResults}" />
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- Results -->
+        <DockPanel Grid.Column="1">
+            <DockPanel DockPanel.Dock="Top" Margin="0,0,0,8">
+                <ToggleSwitch DockPanel.Dock="Right" IsChecked="{Binding LogScale}" OnContent="Log time axis" OffContent="Linear time axis" />
+                <ItemsControl ItemsSource="{Binding Series}" VerticalAlignment="Center">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate x:DataType="vm:ChartSeries">
+                            <StackPanel Orientation="Horizontal" Spacing="6" Margin="0,2,16,2" Background="Transparent"
+                                        ToolTip.Tip="{Binding Algorithm.Description}">
+                                <Line StartPoint="0,0" EndPoint="24,0" Stroke="{Binding Brush}" StrokeThickness="3"
+                                      StrokeDashArray="{Binding DashArray}" VerticalAlignment="Center" />
+                                <TextBlock Text="{Binding Name}" FontSize="12" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </DockPanel>
+            <TextBlock DockPanel.Dock="Bottom" Text="{Binding Status}" Opacity="0.7" Margin="0,8,0,0" TextTrimming="CharacterEllipsis" />
+            <views:PerformanceChart Series="{Binding Series}" LogScale="{Binding LogScale}" Revision="{Binding ChartRevision}" />
+        </DockPanel>
+    </Grid>
+</Window>

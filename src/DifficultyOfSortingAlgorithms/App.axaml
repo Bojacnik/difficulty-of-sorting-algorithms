@@ -1,0 +1,15 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="DifficultyOfSortingAlgorithms.App"
+             RequestedThemeVariant="Dark">
+    <Application.Styles>
+        <FluentTheme>
+            <FluentTheme.Palettes>
+                <ColorPaletteResources x:Key="Dark" Accent="#FF4F9DFF" RegionColor="#FF12151C"
+                                       AltHigh="#FF0D1016" ChromeMediumLow="#FF1A1F29" ChromeMedium="#FF222835"
+                                       ChromeHigh="#FF2E3646" BaseHigh="#FFE8ECF2" BaseMediumHigh="#FFC2CAD6"
+                                       BaseMedium="#FF8B95A5" />
+            </FluentTheme.Palettes>
+        </FluentTheme>
+    </Application.Styles>
+</Application>

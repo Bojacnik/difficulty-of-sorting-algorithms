@@ -1,0 +1,16 @@
+<Project>
+
+  <!-- Inherit the repo-wide settings, then apply test-only overrides. -->
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
+
+  <PropertyGroup>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+    <!-- Run on Microsoft.Testing.Platform: the test project is its own executable. -->
+    <OutputType>Exe</OutputType>
+    <EnableNUnitRunner>true</EnableNUnitRunner>
+    <!-- Test names use underscores (Method_Scenario_Result). -->
+    <NoWarn>$(NoWarn);CA1707</NoWarn>
+  </PropertyGroup>
+
+</Project>
